@@ -414,7 +414,7 @@ void GroceryList::moveToTop( const GroceryItem & groceryItem )
     remove( position );
 
     // Reinsert the item at the top of the list (assuming you have an insert function)
-    insert( 0, groceryItem );    // Assuming insert takes position and item
+    insert( groceryItem, Position::TOP );    // Assuming insert takes position and item
   }
   /////////////////////// END-TO-DO (12) ////////////////////////////
 }
@@ -432,7 +432,7 @@ GroceryList & GroceryList::operator+=( const std::initializer_list<GroceryItem> 
 
   for( const auto & item : rhs )
   {
-    insert( size(), item );
+    insert( item, Position::BOTTOM );
   }
 
   /////////////////////// END-TO-DO (13) ////////////////////////////
@@ -457,7 +457,7 @@ GroceryList & GroceryList::operator+=( const GroceryList & rhs )
 
   for( const auto & item : rhs._gList_vector )
   {
-    insert( size(), item );
+    insert( item, Position::BOTTOM );
   }
 
   /////////////////////// END-TO-DO (14) ////////////////////////////
@@ -498,6 +498,29 @@ std::weak_ordering GroceryList::operator<=>( GroceryList const & rhs ) const
   ///
   /// The content of all the grocery lists's containers is the same - so pick an easy one to walk.
 
+  if( !containersAreConsistant() || !rhs.containersAreConsistant() )
+  {
+    throw GroceryList::InvalidInternalState_Ex( make_details( "Container consistency error" ) );
+  }
+
+  std::size_t lhs_size      = this->size();
+  std::size_t rhs_size      = rhs.size();
+
+  std::size_t common_extent = std::min( lhs_size, rhs_size );
+
+  for( std::size_t i = 0; i < common_extent; ++i )
+  {
+    auto result = _gList_vector[i] <=> rhs._gList_vector[i];    // Pick one container to compare, here using vector
+    if( result != 0 )
+    {
+      return result;    // Return the comparison result as soon as we find a difference
+    }
+  }
+
+  return lhs_size <=> rhs_size;
+
+
+
   /////////////////////// END-TO-DO (15) ////////////////////////////
 }
 
@@ -516,6 +539,25 @@ bool GroceryList::operator==( GroceryList const & rhs ) const
   ///
   /// Walk the list looking for grocery items that don't match.  The content of all the grocery lists's containers is the same -
   /// so pick an easy one to walk.
+
+  if( !containersAreConsistant() || !rhs.containersAreConsistant() )
+    throw GroceryList::InvalidInternalState_Ex( make_details( "Container consistency error" ) );
+
+  if( size() != rhs.size() )
+  {
+    return false;
+  }
+
+  for( std::size_t i = 0; i < size(); ++i )
+  {
+    if( _gList_vector[i] != rhs._gList_vector[i] )
+    {
+      return false;
+    }
+  }
+
+  return true;
+
 
   /////////////////////// END-TO-DO (16) ////////////////////////////
 }
@@ -576,7 +618,7 @@ std::size_t GroceryList::gList_sll_size() const
   /// Some implementations of a singly linked list maintain the size (number of elements in the list).  std::forward_list does
   /// not. The size of singly linked list must be calculated on demand by walking the list from beginning to end counting the
   /// number of elements visited.  The STL's std::distance() function does that, or you can write your own loop.
-
+  return std::distance( _gList_sll.begin(), _gList_sll.end() );
   /////////////////////// END-TO-DO (17) ////////////////////////////
 }
 
@@ -621,6 +663,16 @@ std::istream & operator>>( std::istream & stream, GroceryList & groceryList )
   /// Extract until end of file grocery items from the provided stream and insert them at the bottom of the provided grocery list.
   /// Be sure to extract grocery items and not individual fields such as product name or UPC.
 
+  if( !groceryList.containersAreConsistant() ) throw GroceryList::InvalidInternalState_Ex( make_details( "Container consistency error" ) );
+
+  GroceryItem item;
+
+  while( stream >> item )
+  {
+    groceryList.insert( item, GroceryList::Position::BOTTOM );
+  }
+
+  return stream;
   /////////////////////// END-TO-DO (18) ////////////////////////////
 
   return stream;
