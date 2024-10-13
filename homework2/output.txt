@@ -1,0 +1,53 @@
+My Grocery List
+    0:  "", "", "eggs", 0.00
+    1:  "", "", "milk", 0.00
+    2:  "", "", "hot dogs", 0.00
+    3:  "", "", "bread", 0.00
+
+My roommate's Grocery List
+    0:  "", "Ruffles", "potato chips", 0.00
+    1:  "", "Frito Lays", "potato chips", 0.00
+    2:  "", "Bud Lite", "beer", 0.00
+    3:  "", "", "eggs", 0.00
+    4:  "", "", "pretzels", 0.00
+
+Combined Grocery Lists
+    0:  "", "", "eggs", 0.00
+    1:  "", "", "milk", 0.00
+    2:  "", "", "hot dogs", 0.00
+    3:  "", "Lakes 'Ole", "butter", 0.00
+    4:  "", "", "bread", 0.00
+    5:  "", "", "bananas", 0.00
+    6:  "", "", "apples", 0.00
+    7:  "", "Ruffles", "potato chips", 0.00
+    8:  "", "Frito Lays", "potato chips", 0.00
+    9:  "", "", "pretzels", 0.00
+
+
+Expected results:
+    0:  "", "", "eggs", 0.00
+    1:  "", "", "milk", 0.00
+    2:  "", "", "hot dogs", 0.00
+    3:  "", "Lakes 'Ole", "butter", 0.00
+    4:  "", "", "bread", 0.00
+    5:  "", "", "bananas", 0.00
+    6:  "", "", "apples", 0.00
+    7:  "", "Ruffles", "potato chips", 0.00
+    8:  "", "Frito Lays", "potato chips", 0.00
+    9:  "", "", "pretzels", 0.00
+
+
+Actual results:  
+    0:  "", "", "eggs", 0.00
+    1:  "", "", "milk", 0.00
+    2:  "", "", "hot dogs", 0.00
+    3:  "", "Lakes 'Ole", "butter", 0.00
+    4:  "", "", "bread", 0.00
+    5:  "", "", "bananas", 0.00
+    6:  "", "", "apples", 0.00
+    7:  "", "Ruffles", "potato chips", 0.00
+    8:  "", "Frito Lays", "potato chips", 0.00
+    9:  "", "", "pretzels", 0.00
+
+
+Test results:    PASS

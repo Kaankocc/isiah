@@ -327,14 +327,12 @@ void GroceryList::remove( std::size_t offsetFromTop )
     ///
     /// std::shift_* will be helpful, or write your own loop.  Also remember that you must keep track of the number of valid
     /// grocery items in your array, so don't forget to adjust _gList_array_size.
-
     for( std::size_t i = offsetFromTop; i < _gList_array_size - 1; ++i )
     {
       _gList_array[i] = _gList_array[i + 1];
     }
-    --_gList_array_size;
-
-    /////////////////////// END-TO-DO (8) ////////////////////////////
+    _gList_array[--_gList_array_size] = {};    // Reset the last element after decrementing
+                                               /////////////////////// END-TO-DO (8) ////////////////////////////
   }    // Part 1 - Remove from array
 
 
@@ -350,8 +348,9 @@ void GroceryList::remove( std::size_t offsetFromTop )
     ///
     /// Behind the scenes, std::vector::erase() shifts to the left everything after the insertion point, just like you did for the
     /// array above.
-    auto it = std::next( _gList_vector.begin(), offsetFromTop );
-    _gList_vector.erase( it );
+
+    auto it = _gList_vector.begin() + offsetFromTop;    // Get iterator to the element
+    _gList_vector.erase( it );                          // Remove the element
 
     /////////////////////// END-TO-DO (9) ////////////////////////////
   }    // Part 2 - Remove from vector
@@ -365,8 +364,8 @@ void GroceryList::remove( std::size_t offsetFromTop )
     /// takes a pointer (or more accurately, an iterator) that points to the grocery item to remove.  You need to convert the
     /// zero-based offset from the top (the index) to an iterator by advancing _gList_dll.begin() offsetFromTop times.  The STL
     /// has a function called std::next() that does that, or you can write your own loop.
-    auto it = std::next( _gList_dll.begin(), offsetFromTop );
-    _gList_dll.erase( it );
+    auto it_2 = std::next( _gList_dll.begin(), offsetFromTop );    // Advance the iterator
+    _gList_dll.erase( it_2 );                                      // Remove the element
     /////////////////////// END-TO-DO (10) ////////////////////////////
   }    // Part 3 - Remove from doubly linked list
 
@@ -381,13 +380,12 @@ void GroceryList::remove( std::size_t offsetFromTop )
     /// advancing _gList_sll.before_begin() offsetFromTop times.  The STL has a function called std::next() that does that, or you
     /// can write your own loop.
 
-    auto prev_it = _gList_sll.before_begin();
+    auto It_3 = _gList_sll.before_begin();    // Get an iterator to before the first element
     for( std::size_t i = 0; i < offsetFromTop; ++i )
     {
-      ++prev_it;
+      It_3 = std::next( It_3 );    // Advance to the previous node
     }
-    // Now erase the item after prev_it
-    _gList_sll.erase_after( prev_it );
+    _gList_sll.erase_after( It_3 );
 
     /////////////////////// END-TO-DO (11) ////////////////////////////
   }    // Part 4 - Remove from singly linked list
