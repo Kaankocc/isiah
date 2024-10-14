@@ -51,3 +51,62 @@ Actual results:
 
 
 Test results:    PASS
+
+
+Fusion Festive Grocery List:
+
+    0:  "", "", "chicharrón", 0.00
+    1:  "", "", "tamales", 0.00
+    2:  "", "", "sinigang", 0.00
+    3:  "", "", "tacos", 0.00
+    4:  "", "", "pancit", 0.00
+    5:  "", "", "guacamole", 0.00
+    6:  "", "", "mango float", 0.00
+
+Friend's Grocery List:
+
+    0:  "", "", "queso fresco", 0.00
+    1:  "", "", "salsa verde", 0.00
+    2:  "", "", "adobo", 0.00
+    3:  "", "", "pancit", 0.00
+
+Final Grocery List for the Fusion Festive Meal:
+
+    0:  "", "", "tacos", 0.00
+    1:  "", "", "chicharrón", 0.00
+    2:  "", "", "tamales", 0.00
+    3:  "", "", "sinigang", 0.00
+    4:  "", "", "pancit", 0.00
+    5:  "", "", "guacamole", 0.00
+    6:  "", "", "mango float", 0.00
+    7:  "", "", "salsa verde", 0.00
+    8:  "", "", "adobo", 0.00
+
+
+Expected results:
+
+    0:  "", "", "tacos", 0.00
+    1:  "", "", "chicharrón", 0.00
+    2:  "", "", "tamales", 0.00
+    3:  "", "", "sinigang", 0.00
+    4:  "", "", "pancit", 0.00
+    5:  "", "", "guacamole", 0.00
+    6:  "", "", "mango float", 0.00
+    7:  "", "", "salsa verde", 0.00
+    8:  "", "", "adobo", 0.00
+
+
+Actual results:
+
+    0:  "", "", "tacos", 0.00
+    1:  "", "", "chicharrón", 0.00
+    2:  "", "", "tamales", 0.00
+    3:  "", "", "sinigang", 0.00
+    4:  "", "", "pancit", 0.00
+    5:  "", "", "guacamole", 0.00
+    6:  "", "", "mango float", 0.00
+    7:  "", "", "salsa verde", 0.00
+    8:  "", "", "adobo", 0.00
+
+
+Test results: PASS

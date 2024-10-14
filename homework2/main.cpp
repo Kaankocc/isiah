@@ -1,6 +1,6 @@
 #include <exception>
 #include <iostream>
-#include <sstream>                                                                    // istringstream
+#include <sstream>    // istringstream
 #include <typeinfo>
 
 #include "GroceryItem.hpp"
@@ -14,10 +14,10 @@ namespace
   void basicScenario()
   {
     // Let's start a grocery list
-    GroceryList thingsToBuy = { { "milk"     },
+    GroceryList thingsToBuy = { { "milk" },
                                 { "hot dogs" },
-                                { "eggs"     },
-                                { "bread"    } };
+                                { "eggs" },
+                                { "bread" } };
 
     // Changed my mind, I want to make sure I can get eggs before running out of money so I'm going to move that to the top of my list
     thingsToBuy.moveToTop( { "eggs" } );
@@ -29,17 +29,17 @@ namespace
 
     // Hmm ..., no.  Need to add a few more things
     thingsToBuy += { { "bananas" },
-                     { "apples"  } };
+                     { "apples" } };
 
 
 
 
     // My roommate also has a grocery list
-    GroceryList roommatesList = { { "potato chips", "Ruffles"    },
+    GroceryList roommatesList = { { "potato chips", "Ruffles" },
                                   { "potato chips", "Frito Lays" },
-                                  { "beer",         "Bud Lite"   },
-                                  { "eggs"                       },
-                                  { "pretzels"                   } };
+                                  { "beer", "Bud Lite" },
+                                  { "eggs" },
+                                  { "pretzels" } };
 
     std::cout << "My roommate's Grocery List" << roommatesList << "\n\n";
 
@@ -86,17 +86,17 @@ namespace
                                                   "",   "",            "apples",        0.0
                                                   "",   "Ruffles",     "potato chips",  0.0
                                                   "",   "Frito Lays",  "potato chips",  0.0
-                                                  "",   "",            "pretzels",      0.0 )"   // multi-line raw string literal of grocery items
-                                               );
+                                                  "",   "",            "pretzels",      0.0 )"    // multi-line raw string literal of grocery items
+    );
 
-    GroceryList expectedResults;
+    GroceryList        expectedResults;
     expectedResultsStream >> expectedResults;
 
     std::cout << "\nExpected results:" << expectedResults << "\n\n"
-              << "\nActual results:  " << thingsToBuy     << "\n\n"
+              << "\nActual results:  " << thingsToBuy << "\n\n"
               << "\nTest results:    " << ( thingsToBuy == expectedResults ? "PASS" : "FAIL" ) << '\n';
   }
-}
+}    // namespace
 
 
 
@@ -109,14 +109,77 @@ int main()
 
 
     ///////////////////////// TO-DO (1) //////////////////////////////
-     /// Create, manipulate, and display your own GroceryList object here.  Not looking for anything specific but don't just repeat
-     /// what I've already done above.  Be imaginative and create your own story.  Maybe you're restocking a depleted food bank, or
-     /// preparing for a holiday meal, or catering a banquette, or planning an all night study session, or ...  You *must* use all
-     /// the functions of the GroceryList interface, including the insertion, extraction, and relational operators.  Try inserting
-     /// grocery items from both the top and the bottom of the lists using the enumerated position values TOP and BOTTOM as well as
-     /// indexed offsets.  Remove grocery items from the top, middle, and bottom.  Create, concatenate, rearrange, and compare
-     /// several (more than two) lists. Have some fun with it!  The purpose is to show me you, as a GroceryList class consumer
-     /// (i.e., the client) understand how to *use* the GroceryList.
+    /// Create, manipulate, and display your own GroceryList object here.  Not looking for anything specific but don't just repeat
+    /// what I've already done above.  Be imaginative and create your own story.  Maybe you're restocking a depleted food bank, or
+    /// preparing for a holiday meal, or catering a banquette, or planning an all night study session, or ...  You *must* use all
+    /// the functions of the GroceryList interface, including the insertion, extraction, and relational operators.  Try inserting
+    /// grocery items from both the top and the bottom of the lists using the enumerated position values TOP and BOTTOM as well as
+    /// indexed offsets.  Remove grocery items from the top, middle, and bottom.  Create, concatenate, rearrange, and compare
+    /// several (more than two) lists. Have some fun with it!  The purpose is to show me you, as a GroceryList class consumer
+    /// (i.e., the client) understand how to *use* the GroceryList.
+
+
+    // Initiating a grocery list for a fusion festive meal
+    GroceryList festiveList = { { "tamales" },
+                                { "sinigang" },
+                                { "tacos" },
+                                { "pancit" },
+                                { "guacamole" } };
+
+    // Realizing I need to include some appetizers, I'll add "chicharrón" at the top
+    festiveList.insert( { "chicharrón" }, GroceryList::Position::TOP );
+
+
+    // Also, I’ll add "mango float" to the end of the list for dessert
+    festiveList.insert( { "mango float" }, GroceryList::Position::BOTTOM );
+
+    // Displaying the current grocery list
+    std::cout << "\n\nFusion Festive Grocery List:\n"
+              << festiveList << "\n\n";
+
+    // My friend has a separate grocery list for the celebration
+    GroceryList friendList = { { "queso fresco" },
+                               { "salsa verde" },
+                               { "adobo" },
+                               { "pancit" } };
+
+    std::cout << "Friend's Grocery List:\n"
+              << friendList << "\n\n";
+
+    // Merging our lists to ensure we have everything needed for the feast
+    if( festiveList != friendList )
+      festiveList += friendList;
+
+    // I want to prioritize "tacos" for early preparation, so I’ll move it to the top
+    festiveList.moveToTop( { "tacos" } );
+
+    // Omitting "queso fresco" as it won't be used in our dishes, so I’ll remove it
+    festiveList.remove( { "queso fresco" } );
+
+    // Presenting the final grocery list for our festive gathering
+    std::cout << "Final Grocery List for the Fusion Festive Meal:\n"
+              << festiveList << "\n\n";
+
+
+    std::istringstream expectedResultsStreamForFestiveList( R"( "",   "",              "tacos",            0.0
+                                                  "",   "",              "chicharrón",        0.0
+                                                  "",   "",              "tamales",          0.0
+                                                  "",   "",              "sinigang",         0.0
+                                                  "",   "",              "pancit",           0.0
+                                                  "",   "",              "guacamole",        0.0
+                                                  "",   "",              "mango float",      0.0
+                                                  "",   "",              "salsa verde",      0.0
+                                                  "",   "",              "adobo",            0.0 )" );
+
+
+    GroceryList        expectedResultsForFestiveList;
+    expectedResultsStreamForFestiveList >> expectedResultsForFestiveList;
+
+    std::cout << "\nExpected results:\n"
+              << expectedResultsForFestiveList << "\n\n"
+              << "\nActual results:\n"
+              << festiveList << "\n\n"
+              << "\nTest results: " << ( festiveList == expectedResultsForFestiveList ? "PASS" : "FAIL" ) << '\n';
 
     /////////////////////// END-TO-DO (1) ////////////////////////////
   }
