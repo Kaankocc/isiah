@@ -1,8 +1,15 @@
 ///////////////////////// TO-DO (1) //////////////////////////////
-  /// Include necessary header files
-  /// Hint:  Include what you use, use what you include
-  ///
-  /// Do not put anything else in this section, i.e. comments, classes, functions, etc.  Only #include directives
+/// Include necessary header files
+/// Hint:  Include what you use, use what you include
+///
+/// Do not put anything else in this section, i.e. comments, classes, functions, etc.  Only #include directives
+
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+#include "GroceryItemDatabase.hpp"
 
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
@@ -20,12 +27,18 @@ GroceryItemDatabase & GroceryItemDatabase::instance()
 
     // Look for a prioritized list of database files in the current working directory to use
     // Don't forget to #include <filesystem> to get visibility to the exists() function
-    if     ( filename = "Grocery_UPC_Database-Full.dat"  ;   std::filesystem::exists( filename ) ) /* intentionally empty*/ ;
-    else if( filename = "Grocery_UPC_Database-Large.dat" ;   std::filesystem::exists( filename ) ) /* intentionally empty*/ ;
-    else if( filename = "Grocery_UPC_Database-Medium.dat";   std::filesystem::exists( filename ) ) /* intentionally empty*/ ;
-    else if( filename = "Grocery_UPC_Database-Small.dat" ;   std::filesystem::exists( filename ) ) /* intentionally empty*/ ;
-    else if( filename = "Sample_GroceryItem_Database.dat";   std::filesystem::exists( filename ) ) /* intentionally empty*/ ;
-    else     filename.clear();
+    if( filename = "Grocery_UPC_Database-Full.dat"; std::filesystem::exists( filename ) ) /* intentionally empty*/
+      ;
+    else if( filename = "Grocery_UPC_Database-Large.dat"; std::filesystem::exists( filename ) ) /* intentionally empty*/
+      ;
+    else if( filename = "Grocery_UPC_Database-Medium.dat"; std::filesystem::exists( filename ) ) /* intentionally empty*/
+      ;
+    else if( filename = "Grocery_UPC_Database-Small.dat"; std::filesystem::exists( filename ) ) /* intentionally empty*/
+      ;
+    else if( filename = "Sample_GroceryItem_Database.dat"; std::filesystem::exists( filename ) ) /* intentionally empty*/
+      ;
+    else
+      filename.clear();
 
     return filename;
   };
@@ -62,8 +75,18 @@ GroceryItemDatabase::GroceryItemDatabase( const std::string & filename )
   //
 
   ///////////////////////// TO-DO (2) //////////////////////////////
-    /// Hint:  Use your GroceryItem's extraction operator to read GroceryItems, don't reinvent that here.
-    ///        Read grocery items until end of file pushing each grocery item into the data store as they're read.
+  /// Hint:  Use your GroceryItem's extraction operator to read GroceryItems, don't reinvent that here.
+  ///        Read grocery items until end of file pushing each grocery item into the data store as they're read.
+
+  while( fin )
+  {
+    GroceryItem item;
+    fin >> item;
+    if( fin )
+    {
+      _data[item.upcCode()] = std::move( item );
+    }
+  }
 
   /////////////////////// END-TO-DO (2) ////////////////////////////
 
@@ -81,10 +104,21 @@ GroceryItemDatabase::GroceryItemDatabase( const std::string & filename )
 
 
 ///////////////////////// TO-DO (3) //////////////////////////////
-  /// Implement the rest of the interface, including functions find and size
-  ///
-  /// In the last assignment you implemented GroceryItemDatabase::find() as a recursive linear search (an O(n) operation).  In this
-  /// assignment, implement GroceryItemDatabase::find() as a binary search (an O(log n) operation) by delegating to the std::map's binary
-  /// search function find().
+/// Implement the rest of the interface, including functions find and size
+///
+/// In the last assignment you implemented GroceryItemDatabase::find() as a recursive linear search (an O(n) operation).  In this
+/// assignment, implement GroceryItemDatabase::find() as a binary search (an O(log n) operation) by delegating to the std::map's binary
+/// search function find().
+
+GroceryItem * GroceryItemDatabase::find( const std::string & upc )
+{
+  auto it = _data.find( upc );
+  return ( it != _data.end() ) ? &( it->second ) : nullptr;
+}
+
+std::size_t GroceryItemDatabase::size() const
+{
+  return _data.size();
+}
 
 /////////////////////// END-TO-DO (3) ////////////////////////////
