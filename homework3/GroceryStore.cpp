@@ -45,10 +45,9 @@ GroceryStore::GroceryStore( const std::string & persistentInventoryDB )
   std::string  upc;
   unsigned int quantity;
 
-  // Read each line until the end of the file
+
   while( fin >> std::quoted( upc ) >> quantity )
   {
-    // Insert the UPC and quantity into the inventory database
     _inventoryDB[upc] = quantity;
   }
 
@@ -103,41 +102,35 @@ GroceryStore::GroceryItemsSold GroceryStore::ringUpCustomer( const ShoppingCart 
 
   for( const auto & item : shoppingCart )
   {
-    const std::string & upc = item.first;    // UPC of the item
-    // Use the find function to check if the item exists in the global grocery database
-    auto groceryDetails = worldWideGroceryDatabase.find( upc );    // Search for the item by UPC
+    const std::string & upc            = item.first;    // UPC of the item
+    auto                groceryDetails = worldWideGroceryDatabase.find( upc );
 
-    if( groceryDetails )    // If the item is found in the database
+    if( groceryDetails )
     {
-      // Print the full description of the item
-      receipt << "Item: " << groceryDetails->productName() << " - Brand: " << groceryDetails->brandName()
-              << " - Price: $" << groceryDetails->price() << "\n";
-      totalAmountDue += groceryDetails->price();    // Add the price to the total
+      receipt << "  \"" << groceryDetails->upcCode() << "\", \"" << groceryDetails->brandName() << "\", \"" << groceryDetails->productName() << "\", \"" << groceryDetails->price() << "\n";
+      totalAmountDue += groceryDetails->price();
 
-      // Check if the store has the item in inventory
       auto & inventoryDB   = inventory();
       auto   inventoryItem = inventoryDB.find( upc );
 
-      if( inventoryItem != inventoryDB.end() && inventoryItem->second > 0 )    // Item is in stock
+      if( inventoryItem != inventoryDB.end() && inventoryItem->second > 0 )
       {
-        // Decrease inventory and add the UPC to the purchased list
         inventoryItem->second -= 1;
         purchasedGroceries.insert( upc );
       }
       else
       {
-        // If the item is not in stock, indicate that the item is out of stock
         receipt << "Item out of stock!\n";
       }
     }
-    else    // If the item is not found in the grocery database
+    else
     {
       receipt << "Item with UPC " << upc << " is free of charge (no database entry).\n";
     }
   }
 
-  // Print the total amount due
-  receipt << "\nTotal Amount Due: $" << totalAmountDue << "\n";
+  receipt << "  -------------------------------------------";
+  receipt << "\n  Total Amount Due: $" << totalAmountDue << "\n\n";
 
 
 
@@ -162,10 +155,10 @@ GroceryStore::GroceryItemsSold GroceryStore::ringUpCustomers( const ShoppingCart
 
   for( const auto & customer : shoppingCarts )
   {
-    // Ring up the customer and get the UPCs of groceries they bought
+    const std::string & customerName = customer.first;
+    receipt << customerName << "'s shoppping cart contains:\n";
     GroceryItemsSold customerSales = ringUpCustomer( customer.second, receipt );
 
-    // Merge the customer's sales into today's sales (merge adds unique items)
     todaysSales.merge( customerSales );
   }
 
@@ -210,39 +203,34 @@ void GroceryStore::reorderItems( GroceryItemsSold & todaysSales, std::ostream & 
   int reorderIndex = 1;
   for( const auto & upc : todaysSales )
   {
-    // Check if the UPC is in the store's inventory
     auto inventoryItem = _inventoryDB.find( upc );
     if( inventoryItem == _inventoryDB.end() )
     {
-      // If the UPC is not found in the store's inventory, check if it's in the worldwide database
       auto groceryItem = worldWideGroceryDatabase.find( upc );
       if( groceryItem )
       {
-        // Print message if no longer sold in store
-        reorderReport << reorderIndex++ << ": {\"" << groceryItem->upcCode() << "\" , \"" << groceryItem->brandName() << "\" , \"" << groceryItem->productName() << "\" ," << groceryItem->price() << "}\n"
-                      << "*** no longer sold in this store and will not be re-ordered\n";
+        reorderReport << reorderIndex++ << ": {\"" << groceryItem->upcCode() << "\" , \"" << groceryItem->brandName() << "\" , \"" << groceryItem->productName() << "\" , " << groceryItem->price() << "}\n"
+                      << "*** no longer sold in this store and will not be re-ordered\n\n";
       }
       else
       {
-        // If not found in either database, just display the UPC
         reorderReport << reorderIndex++ << ": " << upc << "\n"
-                      << "*** no longer sold in this store and will not be re-ordered\n";
+                      << "*** no longer sold in this store and will not be re-ordered\n\n";
       }
       continue;
     }
 
-    // If the item is in the store's inventory
+
     if( inventoryItem->second < REORDER_THRESHOLD )
     {
-      // Print the reorder message
       auto groceryItem = worldWideGroceryDatabase.find( upc );
       if( groceryItem )
       {
-        reorderReport << reorderIndex++ << ": {\"" << groceryItem->upcCode() << "\" , \"" << groceryItem->brandName() << "\" , \"" << groceryItem->productName() << "\" ," << groceryItem->price() << "}\n"
+        reorderReport << reorderIndex++ << ": {\"" << groceryItem->upcCode() << "\" , \"" << groceryItem->brandName() << "\" , \"" << groceryItem->productName() << "\" , " << groceryItem->price() << "}\n"
                       << "only " << inventoryItem->second << " in stock after selling 1 unit(s) below threshold ("
-                      << REORDER_THRESHOLD << "), re-ordering " << LOT_COUNT << " more\n";
+                      << REORDER_THRESHOLD << "), re-ordering " << LOT_COUNT << " more\n\n";
 
-        // Reorder by adding LOT_COUNT to the current quantity
+
         inventoryItem->second += LOT_COUNT;
       }
       else
@@ -253,7 +241,7 @@ void GroceryStore::reorderItems( GroceryItemsSold & todaysSales, std::ostream & 
     }
   }
 
-  // Clear today's sales to prepare for the next batch of customers
+
   todaysSales.clear();
 
   /////////////////////// END-TO-DO (5) ////////////////////////////
