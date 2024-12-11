@@ -10,7 +10,7 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
-
+#include <sstream> // Required for std::istringstream
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
 
@@ -53,13 +53,25 @@ namespace
 template<typename Hasher>
 WordFrequency<Hasher>::WordFrequency(std::istream & iStream)
 {
-    std::string word;
-    while (iStream >> word) // Read one word at a time
+   std::string word;
+
+    while (iStream >> word)
     {
+        if (word == "--")
+        {
+            ++wordFrequencyMap[word]; // Treat "--" as a valid word
+            continue;
+        }
+
         std::string sanitizedWord = sanitize(word); // Sanitize the word
+
         if (!sanitizedWord.empty())
         {
-            ++wordFrequencyMap[sanitizedWord]; // Increment the frequency of the sanitized word
+            ++wordFrequencyMap[sanitizedWord];
+        }
+        else
+        {
+            std::cerr << "Skipped word (sanitized to empty): \"" << word << "\"\n";
         }
     }
 }

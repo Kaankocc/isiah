@@ -43,19 +43,21 @@ namespace
     {
       ///////////////////////// TO-DO (2) //////////////////////////////
 
-      const std::size_t p = 31; // Prime number as the small base
-      const std::size_t m = static_cast<std::size_t>(1e9 + 9); // Large prime modulus
-      std::size_t hash = 0;
-      std::size_t p_pow = 1;
+           const std::size_t p = 31;  // Prime base
+        const std::size_t m = 100003; // Large prime modulus
+        std::size_t hash = 0;
+        std::size_t p_pow = 1;
 
-      for (char c : key)
-      {
-          // Use ASCII values to consider both uppercase and lowercase letters
-          hash = (hash + (std::tolower(c) - 'a' + 1) * p_pow) % m;
-          p_pow = (p_pow * p) % m;
-      }
+        for (char c : key) {
+            // Include all characters (not just alphabetic ones)
+            hash = (hash + (static_cast<unsigned char>(c) + 1) * p_pow) % m;
+            p_pow = (p_pow * p) % m;
+        }
 
-      return hash;
+        // Final bitwise mixing to further spread hash values
+        hash ^= (hash >> 16);
+        return hash;
+    
 
       /////////////////////// END-TO-DO (2) ////////////////////////////
     }
