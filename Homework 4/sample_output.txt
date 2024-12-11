@@ -1,0 +1,61 @@
+1.  Test results for:  "Frankenstein or The Modern Prometheus by Mary Shelley.txt"
+
+  [PASSED] Find and open "Frankenstein or The Modern Prometheus by Mary Shelley.txt": as expected, the expected and actual values are equal:  {1}
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {111}
+  [PASSED] wordCount: Frankenstein : as expected, the expected and actual values are equal:  {222}
+  [PASSED] wordCount: feared       : as expected, the expected and actual values are equal:  {333}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {444}
+  [PASSED] wordCount: life         : as expected, the expected and actual values are equal:  {555}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {666}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {???}
+  [PASSED] average bucket size:    : as expected, the expected and actual values are equal:  {?.?}
+  [PASSED] maxBucketSize:          : as expected, the expected and actual values are equal:  {777}
+
+
+2.  Test results for:  "Frankenstein or The Modern Prometheus by Mary Shelley.txt" using custom hasher
+
+  [PASSED] Find and open "Frankenstein or The Modern Prometheus by Mary Shelley.txt": as expected, the expected and actual values are equal:  {0}
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {111}
+  [PASSED] wordCount: Frankenstein : as expected, the expected and actual values are equal:  {222}
+  [PASSED] wordCount: feared       : as expected, the expected and actual values are equal:  {333}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {444}
+  [PASSED] wordCount: life         : as expected, the expected and actual values are equal:  {555}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {666}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {???}
+  [PASSED] average bucket size:    : as expected, the expected value is greater than the actual value
+    EXP: {1}
+    ACT: {?.?}
+  [PASSED] maxBucketSize:          : as expected, the expected value is greater than the actual value
+    EXP: {10}
+    ACT: {777}
+
+
+3.  Test results for:  "The Legend of Sleepy Hollow by Washington Irving.txt"
+
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {111}
+  [PASSED] wordCount: Ichabod      : as expected, the expected and actual values are equal:  {222}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {333}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {444}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {???}
+  [PASSED] average bucket size     : as expected, the expected and actual values are equal:  {?.?}
+  [PASSED] maxBucketSize           : as expected, the expected and actual values are equal:  {555}
+                                                                                             
+                                                                                             
+4.  Test results for:  "The Hunger Games by Suzanne Collins.txt"
+
+  [PASSED] Find and open "The Hunger Games by Suzanne Collins.txt": as expected, the expected and actual values are equal:  {true}
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {111}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {222}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {333}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {???}
+  [PASSED] average bucket size     : as expected, the expected and actual values are equal:  {?.?}
+  [PASSED] maxBucketSize           : as expected, the expected and actual values are equal:  {444}
+
+
+5.  Test results for:  "Word Frequency Object Size"
+
+  [PASSED] Word Frequency Object Size: as expected, the expected and actual values are equal:  {111}
+
+
+
+Summary: 35 of 35 (100%) tests passed
