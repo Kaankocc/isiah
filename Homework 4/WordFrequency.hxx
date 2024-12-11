@@ -6,6 +6,10 @@
   /// Hint:  Include what you use, use what you include
   ///
   /// Do not put anything else in this section, i.e. comments, classes, functions, etc.  Only #include directives
+  #include <istream>
+#include <string>
+#include <string_view>
+#include <unordered_map>
 
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
@@ -47,6 +51,19 @@ namespace
 // Implement WordFrequency::WordFrequency( std::istream ) - See requirements
 ///////////////////////// TO-DO (2) //////////////////////////////
 
+WordFrequency<Hasher>::WordFrequency( std::istream & iStream )
+{
+    std::string word;
+    while (iStream >> word) // Read one word at a time
+    {
+        std::string sanitizedWord = sanitize(word); // Sanitize the word
+        if (!sanitizedWord.empty())
+        {
+            ++wordFrequencyMap[sanitizedWord]; // Increment the frequency of the sanitized word
+        }
+    }
+}
+
 /////////////////////// END-TO-DO (2) ////////////////////////////
 
 
@@ -57,6 +74,12 @@ namespace
 
 // Implement WordFrequency::numberOfWords() const - See requirements
 ///////////////////////// TO-DO (3) //////////////////////////////
+
+template<typename Hasher>
+std::size_t WordFrequency<Hasher>::numberOfWords() const
+{
+    return wordFrequencyMap.size(); // Return the number of unique keys in the hash table
+}
 
 /////////////////////// END-TO-DO (3) ////////////////////////////
 
@@ -69,6 +92,18 @@ namespace
 // Implement WordFrequency::wordCount( const std::string & ) const - See requirements
 ///////////////////////// TO-DO (4) //////////////////////////////
 
+template<typename Hasher>
+std::size_t WordFrequency<Hasher>::wordCount(const std::string_view &word) const
+{
+    std::string sanitizedWord = sanitize(word); // Sanitize the input word
+
+    auto it = wordFrequencyMap.find(sanitizedWord); // Search for the sanitized word in the hash table
+    if (it != wordFrequencyMap.end())
+    {
+        return it->second; // Word found, return its frequency
+    }
+    return 0; // Word not found, return 0
+}
 /////////////////////// END-TO-DO (4) ////////////////////////////
 
 
