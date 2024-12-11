@@ -4,6 +4,18 @@
   ///
   /// Do not put anything else in this section, i.e. comments, classes, functions, etc.  Only #include directives
 
+#include <string>
+#include <cstddef>
+#include <fstream>
+#include <iostream>
+#include <unordered_map>
+#include <cmath>
+
+#include "CheckResults.hpp"
+#include "WordFrequency.hpp"
+
+
+
 /////////////////////// END-TO-DO (1) ////////////////////////////
 
 
@@ -30,6 +42,20 @@ namespace
     std::size_t operator()( const std::string & key ) const noexcept
     {
       ///////////////////////// TO-DO (2) //////////////////////////////
+
+      const std::size_t p = 31; // Prime number as the small base
+      const std::size_t m = static_cast<std::size_t>(1e9 + 9); // Large prime modulus
+      std::size_t hash = 0;
+      std::size_t p_pow = 1;
+
+      for (char c : key)
+      {
+          // Use ASCII values to consider both uppercase and lowercase letters
+          hash = (hash + (std::tolower(c) - 'a' + 1) * p_pow) % m;
+          p_pow = (p_pow * p) % m;
+      }
+
+      return hash;
 
       /////////////////////// END-TO-DO (2) ////////////////////////////
     }

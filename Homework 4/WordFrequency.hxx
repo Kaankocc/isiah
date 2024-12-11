@@ -50,8 +50,8 @@ namespace
 
 // Implement WordFrequency::WordFrequency( std::istream ) - See requirements
 ///////////////////////// TO-DO (2) //////////////////////////////
-
-WordFrequency<Hasher>::WordFrequency( std::istream & iStream )
+template<typename Hasher>
+WordFrequency<Hasher>::WordFrequency(std::istream & iStream)
 {
     std::string word;
     while (iStream >> word) // Read one word at a time
@@ -93,7 +93,7 @@ std::size_t WordFrequency<Hasher>::numberOfWords() const
 ///////////////////////// TO-DO (4) //////////////////////////////
 
 template<typename Hasher>
-std::size_t WordFrequency<Hasher>::wordCount(const std::string_view &word) const
+std::size_t WordFrequency<Hasher>::wordCount(const std::string_view word) const
 {
     std::string sanitizedWord = sanitize(word); // Sanitize the input word
 
@@ -115,6 +115,25 @@ std::size_t WordFrequency<Hasher>::wordCount(const std::string_view &word) const
 // Implement WordFrequency::mostFrequentWord() const - See requirements
 ///////////////////////// TO-DO (5) //////////////////////////////
 
+template<typename Hasher>
+std::string WordFrequency<Hasher>::mostFrequentWord() const
+{
+    // Return an empty string if the hash table is empty
+    if (wordFrequencyMap.empty()) 
+    {
+        return ""; 
+    }
+
+    // Iterate through the hash table to find the most frequent word
+    auto maxElement = std::max_element(
+        wordFrequencyMap.begin(), wordFrequencyMap.end(),
+        [](const auto &a, const auto &b) {
+            return a.second < b.second; // Compare word frequencies
+        });
+
+    return maxElement->first; // Return the word with the highest frequency
+}
+
 /////////////////////// END-TO-DO (5) ////////////////////////////
 
 
@@ -127,6 +146,20 @@ std::size_t WordFrequency<Hasher>::wordCount(const std::string_view &word) const
 ///////////////////////// TO-DO (6) //////////////////////////////
   /// Hint: see the unordered_map's bucket interface at https://en.cppreference.com/w/cpp/container/unordered_map
 
+  template<typename Hasher>
+std::size_t WordFrequency<Hasher>::maxBucketSize() const
+{
+    std::size_t maxSize = 0;
+
+    // Iterate through all buckets in the hash table
+    for (std::size_t i = 0; i < wordFrequencyMap.bucket_count(); ++i)
+    {
+        maxSize = std::max(maxSize, wordFrequencyMap.bucket_size(i)); // Get the size of each bucket
+    }
+
+    return maxSize; // Return the size of the largest bucket
+}
+
 /////////////////////// END-TO-DO (6) ////////////////////////////
 
 
@@ -138,6 +171,19 @@ std::size_t WordFrequency<Hasher>::wordCount(const std::string_view &word) const
 // Implement WordFrequency::bucketSizeAverage() const - See requirements
 ///////////////////////// TO-DO (7) //////////////////////////////
 
+template<typename Hasher>
+double WordFrequency<Hasher>::bucketSizeAverage() const
+{
+    // If there are no buckets, the average is zero.
+    if (wordFrequencyMap.bucket_count() == 0)
+    {
+        return 0.0;
+    }
+
+    // Calculate the average number of elements per bucket
+    return static_cast<double>(wordFrequencyMap.size()) / static_cast<double>(wordFrequencyMap.bucket_count());
+
+}
 /////////////////////// END-TO-DO (7) ////////////////////////////
 
 
