@@ -43,18 +43,16 @@ namespace
     {
       ///////////////////////// TO-DO (2) //////////////////////////////
 
-           const std::size_t p = 31;  // Prime base
-        const std::size_t m = 100003; // Large prime modulus
+           const std::size_t p = 31;  
+        const std::size_t m = 100003; 
         std::size_t hash = 0;
         std::size_t p_pow = 1;
 
         for (char c : key) {
-            // Include all characters (not just alphabetic ones)
             hash = (hash + (static_cast<unsigned char>(c) + 1) * p_pow) % m;
             p_pow = (p_pow * p) % m;
         }
 
-        // Final bitwise mixing to further spread hash values
         hash ^= (hash >> 16);
         return hash;
     
