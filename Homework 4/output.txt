@@ -1,0 +1,61 @@
+1.  Test results for:  "Frankenstein or The Modern Prometheus by Mary Shelley.txt"
+
+  [PASSED] Find and open "Frankenstein or The Modern Prometheus by Mary Shelley.txt": as expected, the expected and actual values are equal:  {true}
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {7195}
+  [PASSED] wordCount: Frankenstein : as expected, the expected and actual values are equal:  {24}
+  [PASSED] wordCount: feared       : as expected, the expected and actual values are equal:  {13}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {4187}
+  [PASSED] wordCount: life         : as expected, the expected and actual values are equal:  {114}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {0}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {the}
+  [PASSED] average bucket size:    : as expected, the expected and actual values are equal:  {0.70038}
+  [PASSED] maxBucketSize:          : as expected, the expected and actual values are equal:  {6}
+
+
+2.  Test results for:  "Frankenstein or The Modern Prometheus by Mary Shelley.txt" using custom hasher
+
+  [PASSED] Find and open "Frankenstein or The Modern Prometheus by Mary Shelley.txt": as expected, the expected and actual values are equal:  {true}
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {7195}
+  [PASSED] wordCount: Frankenstein : as expected, the expected and actual values are equal:  {24}
+  [PASSED] wordCount: feared       : as expected, the expected and actual values are equal:  {13}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {4187}
+  [PASSED] wordCount: life         : as expected, the expected and actual values are equal:  {114}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {0}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {the}
+  [PASSED] average bucket size:    : as expected, the expected value is greater than the actual value
+    EXP: {1}
+    ACT: {0.70038}
+  [PASSED] maxBucketSize:          : as expected, the expected value is greater than the actual value
+    EXP: {10}
+    ACT: {6}
+
+
+3.  Test results for:  "The Legend of Sleepy Hollow by Washington Irving.txt"
+
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {3231}
+  [PASSED] wordCount: Ichabod      : as expected, the expected and actual values are equal:  {45}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {917}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {0}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {the}
+  [PASSED] average bucket size     : as expected, the expected and actual values are equal:  {0.635148}
+  [PASSED] maxBucketSize           : as expected, the expected and actual values are equal:  {6}
+
+
+4.  Test results for:  "The Hunger Games by Suzanne Collins.txt"
+
+  [PASSED] Find and open "The Hunger Games by Suzanne Collins.txt": as expected, the expected and actual values are equal:  {true}
+  [PASSED] numberOfWords           : as expected, the expected and actual values are equal:  {0}
+  [PASSED] wordCount: the          : as expected, the expected and actual values are equal:  {0}
+  [PASSED] wordCount: nonexistent  : as expected, the expected and actual values are equal:  {0}
+  [PASSED] mostFrequentWord        : as expected, the expected and actual values are equal:  {}
+  [PASSED] average bucket size     : as expected, the expected and actual values are equal:  {0}
+  [PASSED] maxBucketSize           : as expected, the expected and actual values are equal:  {0}
+
+
+5.  Test results for:  "Word Frequency Object Size"
+
+  [PASSED] Word Frequency Object Size: as expected, the expected and actual values are equal:  {56}
+
+
+
+Summary: 35 of 35 (100%) tests passed
